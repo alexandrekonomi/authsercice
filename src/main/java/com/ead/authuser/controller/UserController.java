@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "id") UUID id,
-                                             @RequestBody
+                                             @RequestBody @Validated(UserDto.UserView.UserPut.class)
                                              @JsonView(UserDto.UserView.UserPut.class) UserDto userDto) {
         Optional<UserModel> userModelOptional = userService.findbyId(id);
 
@@ -77,7 +78,7 @@ public class UserController {
 
     @PutMapping("/{id}/password")
     public ResponseEntity<Object> updatePassword(@PathVariable(value = "id") UUID id,
-                                                 @RequestBody
+                                                 @RequestBody @Validated(UserDto.UserView.PasswordPut.class)
                                                  @JsonView(UserDto.UserView.PasswordPut.class) UserDto userDto) {
         Optional<UserModel> userModelOptional = userService.findbyId(id);
 
@@ -99,7 +100,7 @@ public class UserController {
 
     @PutMapping("/{id}/image")
     public ResponseEntity<Object> updateImage(@PathVariable(value = "id") UUID id,
-                                              @RequestBody
+                                              @RequestBody @Validated(UserDto.UserView.ImagePut.class)
                                               @JsonView(UserDto.UserView.ImagePut.class) UserDto userDto) {
         Optional<UserModel> userModelOptional = userService.findbyId(id);
 
