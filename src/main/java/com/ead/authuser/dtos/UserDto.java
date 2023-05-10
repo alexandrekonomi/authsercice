@@ -2,6 +2,8 @@ package com.ead.authuser.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.UUID;
@@ -18,12 +20,17 @@ public class UserDto {
     }
 
     private UUID userId;
+    @NotBlank
     @JsonView({UserView.RegistrationPost.class})
     private String username;
+    @NotBlank
+    @Email
     @JsonView({UserView.RegistrationPost.class})
     private String email;
+    @NotBlank
     @JsonView({UserView.RegistrationPost.class, UserView.PasswordPut.class})
     private String password;
+    @NotBlank
     @JsonView(UserView.PasswordPut.class)
     private String oldPassword;
     @JsonView({UserView.RegistrationPost.class,UserView.UserPut.class})
@@ -32,6 +39,7 @@ public class UserDto {
     private String phoneNumber;
     @JsonView({UserView.RegistrationPost.class,UserView.UserPut.class})
     private String cpf;
+    @NotBlank
     @JsonView({UserView.RegistrationPost.class,UserView.ImagePut.class})
     private String imageUrl;
 }
