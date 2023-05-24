@@ -6,7 +6,6 @@ import com.ead.authuser.services.UserService;
 import com.ead.authuser.specifications.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,7 +52,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") UUID id) {
 
-        log.debug("DELETE deleteUser userId {} ", id );
+        log.debug("DELETE deleteUser userId {} ", id);
         Optional<UserModel> userModelOptional = userService.findbyId(id);
 
         if (!userModelOptional.isPresent()) {
@@ -71,7 +70,7 @@ public class UserController {
                                              @RequestBody @Validated(UserDto.UserView.UserPut.class)
                                              @JsonView(UserDto.UserView.UserPut.class) UserDto userDto) {
 
-        log.debug("PUT updateUser userDto received {} ", userDto.toString());
+        log.debug("PUT updateUser userDto received {} ", userDto.getUserId());
         Optional<UserModel> userModelOptional = userService.findbyId(id);
 
         if (!userModelOptional.isPresent()) {
@@ -85,7 +84,7 @@ public class UserController {
 
             userService.save(userModel);
 
-            log.debug("PUT updateUser userModel saved {} ", userModel.toString());
+            log.debug("PUT updateUser userId saved {} ", userModel.getUserId());
             log.info("User updated successfully userId {} ", userModel.getUserId());
             return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
 
