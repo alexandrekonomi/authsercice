@@ -33,6 +33,7 @@ public class InstructorController {
             var userModel = userModelOptional.get();
             userModel.setUserType(UserType.INSTRUCTOR);
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+            userService.save(userModel);
             return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
     }
