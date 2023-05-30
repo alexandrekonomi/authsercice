@@ -5,6 +5,7 @@ import com.ead.authuser.dtos.ResponsePageDto;
 import com.ead.authuser.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,15 +29,18 @@ public class UserClient {
     @Autowired
     UtilsService utilsService;
 
+    @Value("${ead.api.url.course}")
+    String REQUEST_URL_COURSE;
+
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
+
         List<CourseDto> searchResult = null;
-        String url = utilsService.createUrl(userId, pageable);
+        String url = REQUEST_URL_COURSE + utilsService.createUrlGetAllCoursesByUser(userId, pageable);
 
         log.debug("Request URI: {} ", url);
         log.info("Request URI: {} ", url);
 
         try {
-
             ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {
             };
 
@@ -44,7 +48,7 @@ public class UserClient {
             searchResult = result.getBody().getContent();
 
             log.debug("Response Number of Elements: {}", searchResult.size());
-        } catch (HttpStatusCodeException e) {
+        }   catch (HttpStatusCodeException e) {
             log.error("Error request /courses {}", e);
         }
         log.info("Ending request /courses userId {} ", userId);

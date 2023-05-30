@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDto {
+public class    UserDto {
 
     public interface UserView {
         public static interface RegistrationPost {
