@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Log4j2
 @Component
-public class UserClient {
+public class CourseClient {
 
     @Autowired
     RestTemplate restTemplate;
@@ -36,7 +36,6 @@ public class UserClient {
 
         List<CourseDto> searchResult = null;
         String url = REQUEST_URL_COURSE + utilsService.createUrlGetAllCoursesByUser(userId, pageable);
-
         log.debug("Request URI: {} ", url);
         log.info("Request URI: {} ", url);
 
